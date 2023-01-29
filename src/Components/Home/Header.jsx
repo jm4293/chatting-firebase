@@ -26,7 +26,8 @@ const Frame = styled.div`
   width: 100%;
   height: 4%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  //grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 const Box = styled.div`

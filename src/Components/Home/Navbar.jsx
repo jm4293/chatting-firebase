@@ -12,7 +12,7 @@ function Navbar() {
         <Frame>
             <Button onClick={() => sessionStorage.getItem("uid")===null ? alert("로그인 해주세요") : navigate('/profile')}><BsPerson/></Button>
             <Button onClick={() => sessionStorage.getItem("uid")===null ? alert("로그인 해주세요") : navigate('/chatlist')}><BsChat/></Button>
-            <Button><AiOutlineSearch/></Button>
+            <Button onClick={() => sessionStorage.getItem("uid")===null ? alert("로그인 해주세요") : alert("제공되지 않는 서비스 입니다")}><AiOutlineSearch/></Button>
             <Button onClick={() => sessionStorage.getItem("uid")===null ? alert("로그인 해주세요") : navigate('/logout')}><BiDotsHorizontalRounded/></Button>
         </Frame>
     )
@@ -21,20 +21,20 @@ function Navbar() {
 const Frame = styled.div`
   width: 100%;
   height: 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   background-color: rgb(249, 249, 250);
   border-top: 1px solid rgb(226, 226, 226);
 `;
 
 const Button = styled.div`
   cursor: pointer;
-  width: 25%;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `;
 
 export default Navbar
