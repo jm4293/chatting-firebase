@@ -93,7 +93,7 @@ function Profile() {
 
 const Frame = styled.div`
   width: 100%;
-  height: 86%;
+  height: 100%;
 `;
 
 const User = styled.div`

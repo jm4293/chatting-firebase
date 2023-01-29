@@ -20,11 +20,12 @@ function Navbar() {
 
 const Frame = styled.div`
   width: 100%;
-  height: 10%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   background-color: rgb(249, 249, 250);
   border-top: 1px solid rgb(226, 226, 226);
+  z-index: 1000;
 `;
 
 const Button = styled.div`

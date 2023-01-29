@@ -55,10 +55,11 @@ function Login() {
 
 const Frame = styled.div`
   width: 100%;
-  height: 86%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: repeat(auto-fill, 80px);
+  grid-template-rows: repeat(9, 80px);
+  align-items: center;
 `;
 
 const Item = styled.div`

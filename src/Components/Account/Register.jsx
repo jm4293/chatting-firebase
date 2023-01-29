@@ -31,6 +31,7 @@ function Register() {
         await setDoc(doc(db, "users", uid), {
             name: name,
             birth: birth,
+            uid: uid,
         })
             .catch((error) => {
                 console.log("Register setDoc error ", error)
@@ -58,7 +59,7 @@ function Register() {
 
 const Frame = styled.div`
   width: 100%;
-  height: 86%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
