@@ -54,8 +54,8 @@ function Login() {
 }
 
 const Frame = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 98%;
+  height: 95%;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: repeat(9, 80px);
@@ -78,7 +78,6 @@ const Item = styled.div`
   &.Item2 {
     grid-column: 2/3;
     grid-row: 3/4;
-    //margin-top: auto;
     color: rgb(138, 138, 138);
     
     & h3 > div {
@@ -123,7 +122,6 @@ const Input = styled.input`
   border-bottom: 1px solid rgb(160, 160, 160);
   font-size: 20px;
   cursor: pointer;
-  //padding-left: 20px;
 `;
 
 const Button = styled.button`
@@ -133,6 +131,10 @@ const Button = styled.button`
   border: none;
   background-color: rgb(245, 245, 245);
   cursor: pointer;
+  
+  &:hover{
+    background-color: rgb(234, 234, 234);
+  }
 `;
 
 export default Login;

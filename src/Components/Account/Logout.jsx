@@ -10,18 +10,19 @@ function Logout() {
     useEffect(() => {
         async function logout() {
             const auth = getAuth(app);
-            signOut(auth)
-                .then(() => {
-                    sessionStorage.removeItem("uid");
-                    alert("로그아웃 성공");
-                    navigate('/');
-                })
-                .catch((error) => {
-                    alert("로그아웃 실패");
-                    console.log("logout error ", error)
-                });
+            return await signOut(auth)
         }
-        logout();
+
+        logout()
+            .then(() => {
+                sessionStorage.removeItem("uid");
+                alert("로그아웃 성공");
+                navigate('/');
+            })
+            .catch((error) => {
+                alert("로그아웃 실패");
+                console.log("Logout logout error ", error)
+            });
     }, [])
 
     return (
