@@ -4,6 +4,7 @@ import {Routes, Route} from "react-router-dom";
 import Header from "./Components/Home/Header";
 import Profile from "./Components/Profile";
 import ChatList from "./Components/ChatList";
+import Chatting from "./Components/Chatting";
 import Login from "./Components/Account/Login";
 import Register from "./Components/Account/Register";
 import Logout from "./Components/Account/Logout";
@@ -13,15 +14,22 @@ function App() {
     return (
         <Frame>
             <GlobalStyle/>
-            <Header/>
-            <Routes>
-                <Route path="/" element={<Login/>}/>
-                <Route path="/profile" element={<Profile/>}/>
-                <Route path="/chatlist" element={<ChatList/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/logout" element={<Logout/>}/>
-            </Routes>
-            <Navbar/>
+            <div style={{width: "100%", height: "5%"}}>
+                <Header/>
+            </div>
+            <div style={{width: "100%", height: "85%", overflow: "auto"}}>
+                <Routes>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/chatlist" element={<ChatList/>}/>
+                    <Route path="/chatting/:uid" element={<Chatting/>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/logout" element={<Logout/>}/>
+                </Routes>
+            </div>
+            <div style={{width: "100%", height: "10%"}}>
+                <Navbar/>
+            </div>
         </Frame>
     )
 }
@@ -35,17 +43,14 @@ const GlobalStyle = createGlobalStyle`
 
 const Frame = styled.div`
   width: 60vw;
-  //min-width: 600px;
   height: 100vh;
   margin: auto;
-  
-  @media screen and (max-width: 1200px){
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 1200px) {
     width: 90vw;
   }
 `;
 
 export default App;
-
-
-//http://localhost:8000/kakaotoken
-//http://localhost:8000/kakao/callback
