@@ -1,61 +1,69 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {db, storage} from "../Firebase/firebase";
-import {doc, getDoc, collection, query, getDocs} from "firebase/firestore";
+import {doc, getDoc, collection, query, getDocs, setDoc} from "firebase/firestore";
 import {ref, getDownloadURL} from "firebase/storage";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setName, setNumber} from "../store/store";
 
 function Profile() {
-    const [name, setName] = useState("");
-    const [birth, setBirth] = useState("");
     const [photo, setPhoto] = useState("");
     const [friend, setFriend] = useState([]);
-    const [uid, setUid] = useState("");
+    const navigate = useNavigate();
+
+    const name = useSelector((state) => {
+        return state.name.name;
+    })
+
+    const number = useSelector((state) => {
+        return state.number.number;
+    })
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const uid = sessionStorage.getItem("uid");
-        setUid(uid)
 
         async function getUser() {
-            await getDoc(doc(db, "users", uid))
-                .then((result) => {
-                    setName(result.data().name)
-                    setBirth(result.data().birth)
-                })
-                .catch((error) => {
-                    console.log("Profile getUser error ", error)
-                })
+            return await getDoc(doc(db, "users", uid))
         }
 
-        getUser();
+        getUser()
+            .then((result) => {
+                dispatch(setName(result.data().name))
+                dispatch(setNumber(result.data().number))
+            })
+            .catch((error) => {
+                console.log("Profile getUser error ", error)
+            })
 
         async function getPhoto() {
-            await getDownloadURL(ref(storage, uid))
-                .then((result) => {
-                    setPhoto(result);
-                })
-                .catch((error) => {
-                    console.log("Profile getPhoto error ", error)
-                })
+            return await getDownloadURL(ref(storage, uid))
+
         }
 
-        getPhoto();
+        getPhoto()
+            .then((result) => {
+                setPhoto(result);
+            })
+            .catch((error) => {
+                console.log("Profile getPhoto error ", error)
+            })
 
         async function getFriend() {
-            await getDocs(query(collection(db, "users")))
-                .then((result) => {
-                    result.forEach((doc) => {
-                        // console.log(doc.id, " => ", doc.data());
-                        setFriend(list => [...list, doc.data()])
-                    })
-                })
-                .catch((error) => {
-                    console.log("Profile getFriend error ", error)
-                })
+            return await getDocs(query(collection(db, "users")))
         }
 
-        getFriend();
-
-        console.log(friend)
+        getFriend()
+            .then((result) => {
+                result.forEach((doc) => {
+                    setFriend(list => [...list, doc.data()])
+                })
+            })
+            .catch((error) => {
+                console.log("Profile getFriend error ", error)
+            })
     }, [])
 
     return (
@@ -64,36 +72,36 @@ function Profile() {
             <User>
                 <UserPhoto src={photo}/>
                 <UserName>
-                    <div style={{marginBottom: "5px"}}>이름: {name}</div>
-                    <div>생년월일: {birth}</div>
+                    <div  style={{marginBottom: "5px"}}>이름: <span style={{fontWeight: "600px"}}>{name}</span> </div>
+                    <div>번호: {number}</div>
                 </UserName>
             </User>
             <div>
                 <h2>친구 목록</h2>
-                <div>
+                <FriendWrap>
                     {
                         friend.map((element) => {
-                            if (element.uid === uid) {
+                            if (element.uid === sessionStorage.getItem("uid")) {
                                 return
                             } else {
                                 return (
-                                    <Friend>
+                                    <Friend onClick={() => navigate(`/chatting/${element.uid}`)}>
                                         <div>이름: {element.name}</div>
-                                        <div>생년월일: {element.birth}</div>
+                                        <div>번호: {element.number}</div>
                                     </Friend>
                                 )
                             }
                         })
                     }
-                </div>
+                </FriendWrap>
             </div>
         </Frame>
     )
 }
 
 const Frame = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 99%;
+  height: 95%;
 `;
 
 const User = styled.div`
@@ -101,11 +109,9 @@ const User = styled.div`
   height: 10%;
   display: flex;
   margin-bottom: 50px;
-  border: 1px solid rgb(222, 222, 222);
 `;
 
 const UserPhoto = styled.img`
-  //border-radius: 50px;
   margin: 0 20px 0 20px;
 `;
 
@@ -114,12 +120,16 @@ const UserName = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-left: 1px solid rgb(222, 222, 222);
   padding-left: 20px;
 `;
 
+const FriendWrap = styled.div`
+  width: 90%;
+  margin: auto;
+`;
+
 const Friend = styled.div`
-  border: 1px solid rgb(222, 222, 222);
+  border-bottom: 1px solid rgb(222, 222, 222);
   margin: 10px 0;
   padding: 10px;
   cursor: pointer;
