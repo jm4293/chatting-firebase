@@ -37,6 +37,7 @@
 
 ## 실행 방법
 - npm start
+- https://kakao-8ffeb.firebaseapp.com/
 
 ## 실행 과정
 - 서버실행 -> 클라이언트 실행 -> localhost:3000 접속
